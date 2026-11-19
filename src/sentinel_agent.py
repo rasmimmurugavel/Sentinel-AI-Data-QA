@@ -25,7 +25,7 @@ client = genai.Client(api_key=API_KEY) if API_KEY else None
 
 
 # 2. Initialize DuckDB with sample Sentinel tables (Gold, Quarantine, Audit Log, and Silver)
-DB_PATH = "sentinel_agent.duckdb"
+DB_PATH = ":memory:"
 con = duckdb.connect(DB_PATH)
 
 
