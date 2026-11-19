@@ -13,7 +13,13 @@ from src.sentinel_agent import (
 )
 
 st.set_page_config(page_title="Sentinel Governed Data Agent", page_icon="🛡️", layout="wide")
-initialize_demo_tables()
+@st.cache_resource
+def setup_database():
+    initialize_demo_tables()
+    return True
+
+setup_database()
+
 
 st.title("🛡️ Sentinel — Governed AI Data Agent")
 st.caption("Read-Only DuckDB + Gemini Model Router | Strict Table Whitelist & HITL Governance")
