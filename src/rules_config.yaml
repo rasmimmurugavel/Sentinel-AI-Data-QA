@@ -1,0 +1,13 @@
+tables:
+  silver_hr_jobs:
+    pk_col: job_id
+    min_val: 0
+    max_val: 300
+    num_col: salary_usd_hr
+    text_col: description_snippet
+  silver_finance_invoices:
+    pk_col: invoice_id
+    min_val: 0
+    max_val: 50000
+    num_col: billed_amount
+    text_col: audit_note

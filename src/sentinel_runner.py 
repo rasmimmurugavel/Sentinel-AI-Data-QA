@@ -1,0 +1,32 @@
+# THIS IS THE ENGINE: It loops through every rule in your Master Rules Table
+for index, rule_row in rules_df.iterrows():
+    t_name = rule_row["table_name"]
+    c_name = rule_row["column_name"]
+    r_type = rule_row["rule_type"]
+    
+    # 1. It grabs the data from your local SQLite database ('conn')
+    df_current = pd.read_sql(f"SELECT * FROM {t_name};", conn)
+    
+    # 2. It connects the data to Great Expectations
+    asset = data_source.add_dataframe_asset(name=f"{t_name}_rule_{index}")
+    batch = asset.add_batch_definition_whole_dataframe("batch").get_batch(batch_parameters={"dataframe": df_current})
+    
+    # ==========================================================
+    # 3. THIS IS WHERE THE ACTUAL DATA QUALITY CHECKS HAPPEN!
+    # ==========================================================
+    
+    # LAYER 1 CHECK: Is it a Primary Key rule?
+    if r_type == "unique_pk":
+        res = batch.validate(gx.expectations.ExpectColumnValuesToBeUnique(column=c_name))
+        passed = res.success
+        
+    # LAYER 1 CHECK: Is it a Numeric Range rule?
+    elif r_type == "range":
+        res = batch.validate(gx.expectations.ExpectColumnValuesToBeBetween(column=c_name, min_value=rule_row["min_val"], max_value=rule_row["max_val"]))
+        passed = res.success
+        
+    # LAYER 2 CHECK: Is it the AI Semantic Gatekeeper text rule?
+    elif r_type == "ai_semantic":
+        # The script simulates the AI by looking for broken scraper garbage
+        has_bad_text = df_current[c_name].str.contains("NaN%|Select Skills", na=False).any()
+        passed = not has_bad_text

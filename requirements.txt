@@ -1,0 +1,6 @@
+duckdb>=1.1.0
+pandas>=2.2.0
+google-genai>=1.0.0
+python-dotenv>=1.0.0
+streamlit>=1.40.0
+fastmcp>=2.0.0

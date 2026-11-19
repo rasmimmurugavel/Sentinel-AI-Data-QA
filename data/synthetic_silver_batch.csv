@@ -1,0 +1,9 @@
+job_id,title,company,location,salary_usd_hr,tools_mentioned,description_snippet
+101,Data Quality Engineer,LRS Consulting,Remote,60,"SQL, Great Expectations, Soda, Monte Carlo, Collibra, dbt, Python","Profile data, build quality rules, and implement data observability across Bronze/Silver/Gold architectures."
+102,Senior Data Quality Engineer,BairesDev,Palo Alto CA,75,"Databricks, Great Expectations, Deequ, SQL, Python","Safeguard completeness SLAs and resilience against schema anomalies and schema drift in Databricks lakehouse."
+102,Senior Data Quality Engineer,BairesDev,Palo Alto CA,75,"Databricks, Great Expectations, Deequ, SQL, Python","Safeguard completeness SLAs and resilience against schema anomalies and schema drift in Databricks lakehouse."
+103,Data QA Engineer,Gartner,New York NY,33,"SQL, SQL Server, Python, PySpark, ETL","Design test strategies for ETL processes and develop SQL and Python-based validation scripts for data verification."
+104,Data Quality Engineer I,Affinity Solutions,Remote,,"Great Expectations, SQL, Tableau","Build automated data quality and observability checks across enterprise reporting tables."
+105,Remote Data QA Engineer,Virtual Vocations,Remote,,"Python, Pytest, SQL, CI/CD, Databricks, Pandas","Skills Match NaN%Select Skills. Lead automated testing for Databricks platforms utilizing Pytest to validate SQL pipelines."
+106,Data Quality Engineer (Data QE),Anblicks,Remote,-45,"Great Expectations, Soda, Deequ, SQL, Python","Implement automated data validation rules and monitor pipeline health."
+107,Data QA Engineer - Python & SQL,EVERSANA,Hybrid,,"Python, SQL, Snowflake, Postman, CI/CD","Develop backend automation scripts, data validation tests, and complex SQL queries for healthcare data."
