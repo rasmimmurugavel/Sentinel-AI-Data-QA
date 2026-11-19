@@ -32,29 +32,30 @@ con = duckdb.connect(DB_PATH)
 def initialize_demo_tables() -> None:
     """Seeds sample Medallion & Audit tables for standalone testing."""
     con.execute("""
-    CREATE OR REPLACE TABLE silver_hr_jobs AS SELECT * FROM (VALUES
+    CREATE TABLE IF NOT EXISTS silver_hr_jobs AS SELECT * FROM (VALUES
         (101, 'Data Quality Engineer', 60, 'Profile data and build quality rules. Contact: hr@corp.com'),
         (102, 'Senior Data QA Engineer', 75, 'Safeguard completeness SLAs.'),
         (105, 'Remote Data QA Engineer', 55, 'Skills Match NaN%Select Skills.'),
         (106, 'Data Quality Engineer', -45, 'Implement automated data validation rules.')
     ) AS t(job_id, title, salary_usd_hr, description_snippet);
 
-    CREATE OR REPLACE TABLE gold_hr_jobs AS SELECT * FROM (VALUES
+    CREATE TABLE IF NOT EXISTS gold_hr_jobs AS SELECT * FROM (VALUES
         (101, 'Data Quality Engineer', 60, 'Profile data and build quality rules. Contact: [REDACTED_EMAIL]'),
         (102, 'Senior Data QA Engineer', 75, 'Safeguard completeness SLAs.')
     ) AS t(job_id, title, salary_usd_hr, description_snippet);
 
-    CREATE OR REPLACE TABLE quarantine_hr_jobs AS SELECT * FROM (VALUES
+    CREATE TABLE IF NOT EXISTS quarantine_hr_jobs AS SELECT * FROM (VALUES
         (105, 'Remote Data QA Engineer', 55, 'Skills Match NaN%Select Skills.', 'FAIL: AI Semantic Artifact'),
         (106, 'Data Quality Engineer', -45, 'Implement automated data validation rules.', 'FAIL: Salary out of range (0-300)')
     ) AS t(job_id, title, salary_usd_hr, description_snippet, failure_reason);
 
-    CREATE OR REPLACE TABLE sql_audit_log AS SELECT * FROM (VALUES
+    CREATE TABLE IF NOT EXISTS sql_audit_log AS SELECT * FROM (VALUES
         ('Workday_HR', 'silver_hr_jobs', 'salary_usd_hr', 'range', 'FAIL', 'salary = -45'),
         ('Workday_HR', 'silver_hr_jobs', 'description_snippet', 'ai_semantic', 'FAIL', 'NaN%Select Skills'),
         ('Workday_HR', 'silver_hr_jobs', 'job_id', 'unique_pk', 'PASS', 'All unique')
     ) AS t(source_system, table_name, column_name, rule_type, status, sample_issue);
     """)
+
 
 
 # 3. GUARDRAIL 1: Strict Table Whitelist (Blocks raw silver_ and bronze_ tables)
